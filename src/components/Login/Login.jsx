@@ -103,7 +103,7 @@ export default function Login() {
             </Button>
             <p className="my-3">
               Don't have account ?{" "}
-              <Link to={"register"}>
+              <Link to={"/register"}>
                 <span>Register</span>
               </Link>
             </p>
