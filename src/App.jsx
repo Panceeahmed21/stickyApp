@@ -11,24 +11,31 @@ import NavbarComp from "./components/Navbar/NavbarComp";
 import Note from "./components/Note/Note";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 
 function App() {
 
- let routing= createBrowserRouter([
-    {path:"",element:<Layout></Layout> , children:[
-      {index:true , element:<Home></Home>},
-      {path:"register" , element :<Register></Register>},
-      {path:"login" , element :<Login></Login>},
+  let routing = createBrowserRouter([
+    {
+      path: "", element: <Layout></Layout>, children: [
+        {
+          index: true, element: <ProtectedRoute>
+            <Home></Home>
+          </ProtectedRoute>
+        },
+        { path: "register", element: <Register></Register> },
+        { path: "login", element: <Login></Login> },
 
-  ]}
+      ]
+    }
   ])
 
   return (
     <>
 
-<RecoilRoot>
-<RouterProvider router={routing} ></RouterProvider>
-</RecoilRoot>
+      <RecoilRoot>
+        <RouterProvider router={routing} ></RouterProvider>
+      </RecoilRoot>
 
     </>
   );

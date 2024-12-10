@@ -7,10 +7,14 @@ import * as Yup from "yup";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
+import { useRecoilState } from "recoil";
+import { userAtom } from "../../Atoms/userAtom";
 
 export default function Login() {
   let navigate = useNavigate();
   let [userError, setError] = useState();
+  let [userToken, setUserToken] = useRecoilState(userAtom);
+
 
   let schema = Yup.object().shape({
     email: Yup.string().email("Invalid format").required("Email is required"),
@@ -28,6 +32,10 @@ export default function Login() {
       .then((res) => {
         if(res?.data?.msg == "done"){
           localStorage.setItem("userToken",res?.data?.token)
+          setUserToken(res?.data?.token)
+
+
+          
           navigate("/")
         }
       })

@@ -45,7 +45,7 @@ export default function Home() {
   }
 
   async function getNotes() {
-    setNoteError(null)
+    setNoteError(null);
     await axios
       .get(`https://note-sigma-black.vercel.app/api/v1/notes`, {
         headers: {
@@ -59,7 +59,7 @@ export default function Home() {
       .catch((err) => {
         console.log(err);
         setNoteError(err?.response?.data?.msg);
-        setNotesLength(0)
+        setNotesLength(0);
       });
   }
 
@@ -143,19 +143,29 @@ export default function Home() {
         <h4>{noteError}</h4>
       ) : (
         <>
-          {notes?.length > 0 ? <>
-            <h2 className="mb-4">Notes</h2>
-            <div className="row g-4">
-              {notes?.map((note) => {
-                return (
-                  <Note key={note._id} noteID={note._id} note={note} deleteFn={deleteNote} getFn={getNotes} ></Note>
-                );
-              })}
+          {notes?.length > 0 ? (
+            <>
+              <h2 className="mb-4">Notes</h2>
+              <div className="row g-4">
+                {notes?.map((note) => {
+                  return (
+                    <Note
+                      key={note._id}
+                      noteID={note._id}
+                      note={note}
+                      deleteFn={deleteNote}
+                      getFn={getNotes}
+                    ></Note>
+                  );
+                })}
+              </div>
+              <h6 className="my-3 text-end">Notes Number : {notesLength}</h6>
+            </>
+          ) : (
+            <div className="vh-100  d-flex justify-content-center align-items-center">
+              <PropagateLoader color={"#285ed2"} size={30} />
             </div>
-            <h6 className="my-3 text-end">Notes Number : {notesLength}</h6>
-          </> : <div className="vh-100  d-flex justify-content-center align-items-center">
-            <PropagateLoader color={"#285ed2"} size={30} />
-          </div>}
+          )}
         </>
       )}
     </>
